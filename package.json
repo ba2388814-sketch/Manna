@@ -1,7 +1,7 @@
 {
   "name": "hazera-ai-backend",
-  "version": "1.0.0",
-  "description": "Node.js Express backend for HAZERA AI personal assistant. Developer: A.K.M REDWAN",
+  "version": "1.0.1",
+  "description": "HAZERA AI Personal Assistant Backend",
   "main": "server.js",
   "type": "commonjs",
   "scripts": {
@@ -10,10 +10,8 @@
   },
   "keywords": [
     "hazera-ai",
-    "assistant",
-    "voice-ai",
+    "ai-assistant",
     "bengali",
-    "bangla",
     "express"
   ],
   "author": "A.K.M REDWAN",
