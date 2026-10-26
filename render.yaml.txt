@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: hazera-ai-backend
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: NODE_VERSION
+        value: 20.18.0
+      - key: AI_PROVIDER
+        value: gemini
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GEMINI_MODEL
+        value: gemini-2.5-flash
+      - key: ASSISTANT_NAME
+        value: HAZERA AI
+      - key: DEVELOPER_NAME
+        value: A.K.M REDWAN
