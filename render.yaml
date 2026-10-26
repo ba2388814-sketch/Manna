@@ -10,7 +10,7 @@ services:
         value: 20.18.0
       - key: AI_PROVIDER
         value: gemini
-      - key: GEMINI_API_KEY
+      - key: AQ.Ab8RN6L9sYPCl5iU6lQpKsRn4MfX8dn7b3RwttcB2-VZhu-uBg
         sync: false
       - key: GEMINI_MODEL
         value: gemini-2.5-flash
