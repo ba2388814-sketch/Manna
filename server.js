@@ -54,10 +54,10 @@ Core Directives:
 // ----------------- AI Provider Handlers -----------------
 
 // 1. Google Gemini Provider
-async function callGemini(message, history, systemPrompt) {
-  const apiKey = process.env.GEMINI_API_KEY;
+async function callGemini(message, history, systemPrompt, clientApiKey) {
+  const apiKey = clientApiKey || process.env.GEMINI_API_KEY;
   if (!apiKey) {
-    throw new Error('GEMINI_API_KEY is not configured on the server.');
+    throw new Error('GEMINI_API_KEY is not configured on the server. Please add GEMINI_API_KEY in Render Environment Variables or configure it in the Android app Settings.');
   }
 
   const model = process.env.GEMINI_MODEL || 'gemini-2.5-flash';
@@ -284,7 +284,8 @@ app.get('/api/info', (req, res) => {
 // Chat Conversation Endpoint
 app.post('/api/chat', async (req, res) => {
   try {
-    const { message, history = [], memories = [], language = 'auto', provider } = req.body;
+    const { message, history = [], memories = [], language = 'auto', provider, apiKey } = req.body;
+    const clientKey = apiKey || req.headers['x-api-key'] || (req.headers.authorization && req.headers.authorization.replace('Bearer ', ''));
 
     if (!message || typeof message !== 'string' || message.trim().length === 0) {
       return res.status(400).json({ error: 'Message text is required.' });
@@ -298,19 +299,19 @@ app.post('/api/chat', async (req, res) => {
 
     switch (selectedProvider) {
       case 'openai':
-        reply = await callOpenAI(message, history, systemPrompt);
+        reply = await callOpenAI(message, history, systemPrompt, clientKey);
         break;
       case 'anthropic':
-        reply = await callAnthropic(message, history, systemPrompt);
+        reply = await callAnthropic(message, history, systemPrompt, clientKey);
         break;
       case 'groq':
-        reply = await callGroq(message, history, systemPrompt);
+        reply = await callGroq(message, history, systemPrompt, clientKey);
         break;
       case 'gemini':
       default:
         // Default to Gemini
         executedProvider = 'gemini';
-        reply = await callGemini(message, history, systemPrompt);
+        reply = await callGemini(message, history, systemPrompt, clientKey);
         break;
     }
 
